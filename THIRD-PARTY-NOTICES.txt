@@ -1,0 +1,6 @@
+Entorn Scanner for PHP includes the following direct dependencies in its binary distribution:
+
+- TreeSitter.DotNet 1.3.0 — MIT
+- Entorn.Scanner.Contracts 1.0.0 — Apache-2.0
+
+Their transitive dependencies and bundled native tree-sitter components retain their respective copyright and license terms. NuGet package metadata and lock files identify the exact dependency closure used for each release.

@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Archie.Scanner.Php/Archie.Scanner.Php.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Archie.Scanner.Php.Tests/Archie.Scanner.Php.Tests.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,135 @@
+{
+  "schemaVersion": "php-public-corpus/v1",
+  "repository": "https://github.com/bagisto/bagisto",
+  "revision": "aa544167182b3503c08a3b27981288d1921fbf4d",
+  "entities": [
+    {
+      "key": "php:laravel-app:composer.json",
+      "path": "composer.json",
+      "rule": "composer:locked-laravel-application"
+    },
+    {
+      "key": "php:composer-project:packages/Webkul/CatalogRule/composer.json",
+      "path": "packages/Webkul/CatalogRule/composer.json",
+      "rule": "composer:nested-production-module"
+    },
+    {
+      "key": "php:composer-project:packages/Webkul/Checkout/composer.json",
+      "path": "packages/Webkul/Checkout/composer.json",
+      "rule": "composer:nested-production-module"
+    },
+    {
+      "key": "php:composer-project:packages/Webkul/Customer/composer.json",
+      "path": "packages/Webkul/Customer/composer.json",
+      "rule": "composer:nested-production-module"
+    },
+    {
+      "key": "php:composer-project:packages/Webkul/Product/composer.json",
+      "path": "packages/Webkul/Product/composer.json",
+      "rule": "composer:nested-production-module"
+    },
+    {
+      "key": "php:composer-project:packages/Webkul/Sales/composer.json",
+      "path": "packages/Webkul/Sales/composer.json",
+      "rule": "composer:nested-production-module"
+    },
+    {
+      "key": "php:composer-project:packages/Webkul/Shop/composer.json",
+      "path": "packages/Webkul/Shop/composer.json",
+      "rule": "composer:nested-production-module"
+    },
+    {
+      "key": "php:http-endpoint:composer.json:GET:/catalog/products",
+      "path": "packages/Webkul/Admin/src/Routes/catalog-routes.php",
+      "rule": "laravel:literal-group-controller-route"
+    },
+    {
+      "key": "php:http-endpoint:composer.json:GET:/checkout/cart",
+      "path": "packages/Webkul/Shop/src/Routes/checkout-routes.php",
+      "rule": "laravel:literal-group-controller-route"
+    },
+    {
+      "key": "php:laravel-job:composer.json:Webkul\\Sitemap\\Jobs\\ProcessSitemap",
+      "path": "packages/Webkul/Admin/src/Http/Controllers/Marketing/SearchSEO/SitemapController.php",
+      "rule": "laravel:queued-job-static-dispatch"
+    },
+    {
+      "key": "php:laravel-event:composer.json:name:catalog.product.update.before",
+      "path": "packages/Webkul/Admin/src/Http/Controllers/Catalog/ProductController.php",
+      "rule": "laravel:event-facade-dispatch"
+    },
+    {
+      "key": "php:laravel-database:composer.json:default",
+      "path": "packages/Webkul/Product/src/Models/ProductFlat.php",
+      "rule": "laravel:eloquent-default-connection"
+    }
+  ],
+  "relationships": [
+    {
+      "relationship": "contains",
+      "from": "php:composer-project:packages/Webkul/Admin/composer.json",
+      "to": "php:http-endpoint:composer.json:GET:/catalog/products",
+      "path": "packages/Webkul/Admin/src/Routes/catalog-routes.php",
+      "rule": "laravel:literal-group-controller-route"
+    },
+    {
+      "relationship": "contains",
+      "from": "php:composer-project:packages/Webkul/Shop/composer.json",
+      "to": "php:http-endpoint:composer.json:GET:/checkout/cart",
+      "path": "packages/Webkul/Shop/src/Routes/checkout-routes.php",
+      "rule": "laravel:literal-group-controller-route"
+    },
+    {
+      "relationship": "publishes",
+      "from": "php:composer-project:packages/Webkul/Admin/composer.json",
+      "to": "php:laravel-job:composer.json:Webkul\\Sitemap\\Jobs\\ProcessSitemap",
+      "path": "packages/Webkul/Admin/src/Http/Controllers/Marketing/SearchSEO/SitemapController.php",
+      "rule": "laravel:queued-job-static-dispatch"
+    },
+    {
+      "relationship": "publishes",
+      "from": "php:composer-project:packages/Webkul/Admin/composer.json",
+      "to": "php:laravel-event:composer.json:name:catalog.product.update.before",
+      "path": "packages/Webkul/Admin/src/Http/Controllers/Catalog/ProductController.php",
+      "rule": "laravel:event-facade-dispatch"
+    },
+    {
+      "relationship": "subscribes",
+      "from": "php:composer-project:packages/Webkul/Product/composer.json",
+      "to": "php:laravel-event:composer.json:name:checkout.order.save.after",
+      "path": "packages/Webkul/Product/src/Providers/EventServiceProvider.php",
+      "rule": "laravel:event-provider-listen-map"
+    },
+    {
+      "relationship": "depends-on",
+      "from": "php:composer-project:packages/Webkul/Product/composer.json",
+      "to": "php:laravel-database:composer.json:default",
+      "path": "packages/Webkul/Product/src/Models/ProductFlat.php",
+      "rule": "laravel:eloquent-default-connection"
+    },
+    {
+      "relationship": "depends-on",
+      "from": "php:composer-project:packages/Webkul/Sales/composer.json",
+      "to": "php:composer-project:packages/Webkul/Inventory/composer.json",
+      "path": "packages/Webkul/Sales/src/Models/Shipment.php",
+      "rule": "laravel:eloquent-model-relation"
+    }
+  ],
+  "knownStaticGaps": [
+    {
+      "family": "outbound-http",
+      "path": "packages/Webkul/PhonePe/src/Payment/PhonePe.php",
+      "reason": "Payment origins are selected by a method and concatenated dynamically; v1.2 does not execute method flow."
+    },
+    {
+      "family": "schedules",
+      "path": "packages/Webkul/CatalogRule/src/Providers/CatalogRuleServiceProvider.php",
+      "reason": "Package schedules are registered in callAfterResolving closures rather than an approved Console Kernel method or Schedule facade call."
+    },
+    {
+      "family": "batched-import-jobs",
+      "path": "packages/Webkul/DataTransfer/src/Helpers/Importers/AbstractImporter.php",
+      "reason": "Bus chains and batches are assembled dynamically; representative static queued jobs are covered separately."
+    }
+  ]
+}
